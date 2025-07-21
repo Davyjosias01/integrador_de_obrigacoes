@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empresas</title>
+  <style>
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1em;
+      margin: 1em;
+      max-width: 300px;
+    }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+    <h1>Empresas</h1>
+
+    <% if @empresas.any? %>
+        <div class="grid">
+            <%@empresas.each do |empresa| %>
+                <div class="card">
+                    <p><strong>Nome: </strong> <%= empresa["fantasy_name"] %> </p>
+                    <p><strong>Cnpj: </strong> <%= empresa["cnpj"] %> </p>
+                    <p><strong>Código do domínio: </strong> <%= empresa["dominio_code"] %> </p>
+
+                    <form action="/integrar" method="POST">
+                        <input type="hidden" name="cnpj" value="<%= empresa["cnpj"]%>">
+                        <input type="hidden" name="note" value="teste de integração por interface!">
+                    
+                        <button type="submit">Integrar</button>
+                    </form>
+                </div>
+            <%end%>
+        </div>
+    <% else %>
+        <p>Nenhuma empresa encontrada. </p>
+    <% end %>
+</body>
+</html>
